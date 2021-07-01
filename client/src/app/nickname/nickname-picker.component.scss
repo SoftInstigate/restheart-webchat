@@ -1,0 +1,34 @@
+.container {
+  background-color: #0e1621;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: min(300px, 40%);
+  label {
+    margin-bottom: 1em;
+  }
+
+  input {
+    height: 40px;
+    color: black;
+  }
+
+}
+
+
+button {
+  border: none;
+  background: #5288c1 none;
+  cursor: pointer;
+  color: white;
+  margin: 0.7em 0;
+	padding: 1em 2.2em;
+}

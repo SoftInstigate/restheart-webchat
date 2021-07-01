@@ -1,0 +1,13 @@
+<button id="logout-btn" (click)="logout()">logout</button>
+<div class="container">
+  <div class="message-container">
+    <app-message-card *ngFor="let message of messages" [message]="message"></app-message-card>
+  </div>
+
+  <form (ngSubmit)="send()">
+    <textarea [formControl]="content"></textarea>
+    <button type="submit"> Send </button>
+  </form>
+</div>
+
+

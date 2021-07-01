@@ -1,0 +1,96 @@
+## Configuration file for fileAclAuthorizer
+
+permissions:
+    # admin role can do everything
+    # WARNING: mongoAclAuthorizer is enabled by default
+    #          it defines 'admin' as the root-role that can execute any request
+    #          if a permission does not authorize a request for the admin role,
+    #          the mongoAclAuthorizer will authorize it anyway
+    #          set 'root-role: null' in restheart.yml to avoid this
+    - role: admin
+      predicate: path-prefix('/')
+      priority: 0
+      mongo:
+        allowManagementRequests: true # default false
+        allowBulkPatch: true          # default false
+        allowBulkDelete: true         # default false
+        allowWriteMode: true          # default false
+
+    # allow role 'user' GET document from /{userid}
+    # a read filter apply, so only document with status=public or author=userid are returned <- readFilter
+    # must use 'page' qparam <- qparams-contain(page)
+    # cannot use 'filter' and 'sort' qparams <- qparams-blacklist(filter, sort)
+    # the property 'log' is removed from the response <- projectResponse
+    # NOTE: the id of the user is:
+    #       - @user.userid with fileRealmAuthenticator
+    #       - @user._id with mongoRealmAuthenticator"
+    - roles: [ user ]
+      predicate: >
+        method(GET)
+        and path-template('/{userid}')
+        and equals(@user.userid, ${userid})
+        and qparams-contain(page)
+        and qparams-blacklist(filter, sort)
+
+      priority: 100
+      mongo:
+        readFilter: >
+          { "$or": [
+            {"status": "public"},
+            {"author": "@user.userid" }
+            ]}
+        projectResponse: >
+          { "log": 0 }
+
+    # allow role 'user' to create documents under /{userid}
+    # the request content must contain 'title' and 'content' <- bson-request-contains(title, content)
+    # the request content cannot contain any property other than 'title' and 'content' <- bson-request-whitelist(title, content)
+    # no qparams can be specified <- qparams-whitelist()
+    # the property 'author' and 'status' are added to the request at server-side <- mergeRequest
+    # the property 'log' with some request values is added to the request at server-side <- mergeRequest
+    # NOTE: the id of the user is:
+    #       - @user.userid with fileRealmAuthenticator
+    #       - @user._id with mongoRealmAuthenticator"
+    - roles: [ user ]
+      predicate: >
+        method(POST)
+        and path-template('/{userid}')
+        and equals(@user.userid, ${userid})
+        and bson-request-whitelist(title, content)
+        and bson-request-contains(title, content)
+        and qparams-whitelist()
+      priority: 100
+
+      mongo:
+        mergeRequest: >
+          {"author": "@user.userid", "status": "draft", "log": "@request"}
+
+    # allow role 'user' to modify documents under /{userid}
+    # the request content must contain 'title' and 'content' or 'status' <- (bson-request-contains(title, content) or bson-request-contains(status))
+    # the request content cannot contain any property other than 'title', 'content' and 'status' <- bson-request-whitelist(title, content, status)
+    # no qparams can be specified <- qparams-whitelist()
+    # the property 'author' is added to the request at server-side <- mergeRequest
+    # a write filter applies so that user can only modify document with author=userid <- writeFilter
+    # NOTE: the id of the user is:
+    #       - @user.userid with fileRealmAuthenticator
+    #       - @user._id with mongoRealmAuthenticator"
+    - roles: [ user ]
+      predicate: >
+        method(PATCH)
+        and path-template('/{userid}/{docid}')
+        and equals(@user.userid, ${userid})
+        and bson-request-whitelist(title, content, status)
+        and (bson-request-contains(title, content)
+        or bson-request-contains(status))
+        and qparams-whitelist()
+      priority: 100
+
+      mongo:
+        mergeRequest: >
+          {"author": "@user.userid"}
+        writeFilter: >
+          {"status": "draft"}
+
+    - roles: [ $unauthenticated ]
+      predicate: >
+        path-prefix('/messages')

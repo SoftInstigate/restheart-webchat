@@ -1,0 +1,12 @@
+<div class="container">
+  <form (ngSubmit)="saveNickname()">
+
+    <label for="nickname">Choose a nickname</label>
+
+
+    <input type="text" id="nickname" [formControl]="nicknameControl">
+    <button type="submit">Let's chat!</button>
+
+
+  </form>
+</div>
