@@ -1,5 +1,7 @@
 # RESTHeart Webchat
-This examples uses [RESTHeart](https://restheart.org) websockets to create a basic chat application.
+This examples uses [RESTHeart](https://restheart.org) WebsSockets API to create a basic chat application.
+
+For more information refer to the [Change Streams section](https://restheart.org/docs/change-streams/) in the RESTheart official documentation.
 
 ## Requirements
 - RESTHeart 6
