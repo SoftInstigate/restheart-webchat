@@ -10,7 +10,7 @@ This examples uses RESTHeart websockets to create a basic chat application.
 - Run the following command to download and run the latest RESTHeart version `./bin/restart.sh -p restheart`
 - Create message collection and define change stream stage
 ```
-curl -u admin:secret -X PUT localhost:8080/p -d '{"streams": [{"stages": [{"_$match": {"_$or": [{"operationType": "insert"}]}}],"uri": "all"}]}' -H "Content-Type: application/json"
+curl -u admin:secret -X PUT localhost:8080/messages -d '{"streams": [{"stages": [{"_$match": {"_$or": [{"operationType": "insert"}]}}],"uri": "all"}]}' -H "Content-Type: application/json"
 ```
 - Navigate into client folder `cd client/` and run `yarn` or `npm install` to install the required dependencies
 - Start angular application with `ng serve`
