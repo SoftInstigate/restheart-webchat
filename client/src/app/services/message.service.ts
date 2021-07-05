@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import { Message } from '../models/message';
-import { webSocket, WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
+import { webSocket,  WebSocketSubjectConfig } from 'rxjs/webSocket';
 import {UserService} from './user.service';
 import {environment} from "../../environments/environment";
 import {map} from "rxjs/operators";
@@ -22,8 +22,6 @@ export class MessageService {
     }
   };
   private ws: Subject<Message> = webSocket(this.configuration);
-
-  private headers = { Authorization: 'Basic ' + window.btoa('admin:secret')};
 
   private messages: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>([]);
 
