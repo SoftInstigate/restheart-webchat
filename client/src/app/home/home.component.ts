@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Message } from '../models/message';
 import { MessageService } from '../services/message.service';
 import { map } from 'rxjs/operators';
-import {UserService} from '../services/user.service';
+import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
     private messageService: MessageService,
     private userService: UserService,
     private router: Router
-    ) {
+  ) {
 
   }
 

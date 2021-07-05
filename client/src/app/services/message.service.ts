@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Message } from '../models/message';
-import { webSocket,  WebSocketSubjectConfig } from 'rxjs/webSocket';
-import {UserService} from './user.service';
-import {environment} from "../../environments/environment";
-import {map} from "rxjs/operators";
+import { webSocket, WebSocketSubjectConfig } from 'rxjs/webSocket';
+import { UserService } from './user.service';
+import { environment } from "../../environments/environment";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +59,4 @@ export class MessageService {
   private getMessageHistory(): Observable<Message[]> {
     return this.http.get<Message[]>(environment.MESSAGE_URL);
   }
-
-
 }
