@@ -1,0 +1,31 @@
+:host {
+  margin-top: 1.1rem;
+  border-top: 1px solid #525252;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
+  padding: .5rem .3rem .5rem .3rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent);
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: #1d1d1e;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #757576;
+  }
+
+  & > * {
+    flex: 0 0 auto;
+  }
+
+  & > div:first-of-type {
+    margin-top: .3rem;
+  }
+
+}

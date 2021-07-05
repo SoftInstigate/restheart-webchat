@@ -1,0 +1,44 @@
+:host {
+  max-width: 90%;
+  position: relative;
+  width: 100%;
+  color: #2c2c2c;
+  border: 2px solid rgb(60, 60, 60);
+  border-radius: 1.35rem;
+  transition: border-color .15s ease;
+
+
+  input {
+    height: 2.5rem;
+    margin-bottom: 0;
+    border: none!important;
+    border-radius: 1.375rem;
+    background-color: initial !important;
+    padding: .5rem 3rem .75rem 3rem;
+    width: 100%;
+  }
+  input:focus {
+    outline: none!important;
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  #search {
+    position: absolute;
+    top: .5rem;
+    left: .75rem;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+  }
+
+  #clear {
+    position: absolute;
+    top: .7rem;
+    right: 1rem;
+    font-size: 1rem;
+    color: var(--text-secondary);
+  }
+
+  #clear:hover {
+    cursor: pointer;
+  }
+}

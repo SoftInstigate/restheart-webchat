@@ -1,0 +1,14 @@
+.contacts {
+  padding-top: 1rem;
+  height: 100%;
+  background-color: var(--secondary);
+  flex: 1;
+  min-width: 18rem;
+  max-width: 26.5rem;
+  transition: background-color .2s;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid black;
+  align-items: center;
+
+}

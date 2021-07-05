@@ -1,0 +1,91 @@
+.contact {
+  height: min-content;
+  width: 100%;
+  margin: 0 0 .5rem 0;
+  cursor: pointer;
+  padding: .5625rem .6975rem .5625rem .5625rem;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.status {
+  font-size: 1rem;
+  line-height: 1.6875rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-right: .5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.375rem;
+  height: 3.375rem;
+  color: #fff;
+  font-weight: 500;
+  white-space: nowrap;
+  background-color: orange;
+}
+
+
+.info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+
+  .title {
+    width: auto;
+    padding-right: .125rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    & > p {
+      font-size: 1.2rem;
+      font-weight: 900;
+    }
+  }
+
+  .last-read {
+    margin-left: auto;
+    color: var(--text-secondary);
+  }
+
+  .subtitle {
+    padding-right: .125rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .last-message {
+      color: var(--text-secondary);
+      padding-right: .25rem;
+      flex-grow: 1;
+      font-size: 1rem;
+      line-height: 1.6875rem;
+      margin: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+}
+
+.contact:not(.active):hover {
+  background-color: rgba(255,255,255,0.08);
+  border-radius: 1rem;
+}
+
+.active {
+  background-color: var(--accent);
+  border-radius: 1rem;
+
+  .info * {
+    color: var(--text-primary)!important;
+  }
+}

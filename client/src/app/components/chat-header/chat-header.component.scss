@@ -1,0 +1,30 @@
+:host {
+  background-color: var(--secondary);
+  display: flex;
+  //flex-grow: 1;
+  overflow: hidden;
+  align-items: center;
+  height: 5.8rem;
+  padding: .5rem .8125rem .5rem 1.5rem;
+
+  .chat-avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: orange;
+    margin-right: .8rem;
+    font-size: .9rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    overflow: hidden;
+  }
+
+  .chat-nickname {
+    font-weight: 900;
+  }
+
+  .last-seen {
+    color: var(--text-secondary);
+  }
+}
