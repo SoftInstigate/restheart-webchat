@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule, Injectable } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +17,8 @@ import { ChatHeaderComponent } from './components/chat-header/chat-header.compon
 import { MessageComponent } from './components/message/message.component';
 import { MessageInputComponent } from './components/message-input/message-input.component';
 import { MessagesContainerComponent } from './components/messages-container/messages-container.component';
+import * as Sentry from "@sentry/angular";
+import { Router } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,23 @@ import { MessagesContainerComponent } from './components/messages-container/mess
     ReactiveFormsModule
   ],
   providers: [
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: true,
+      }),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => {},
+      deps: [Sentry.TraceService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
