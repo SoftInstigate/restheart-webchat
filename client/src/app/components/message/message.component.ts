@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Message} from "../../models/message";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-message',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MessageComponent implements OnInit {
 
-  constructor() { }
+  @Input() message: Message;
+
+  constructor(public userService: UserService) {
+  }
 
   ngOnInit(): void {
+
   }
 
 }

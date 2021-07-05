@@ -1,6 +1,6 @@
-<form class="message-input">
-  <input type="text" class="message-box" placeholder="Send a message">
-  <button class="send-btn" type="submit" >
-    <span class="material-icons">send</span>
+<form class="message-input" (ngSubmit)="onSubmit()">
+  <input type="text" class="message-box" placeholder="Send a message" [formControl]="messageInput">
+  <button class="send-btn" type="submit" [disabled]="!messageInput.valid">
+    <span class="material-icons" [style.color]="messageInput.valid ? '' : 'grey'">send</span>
   </button>
 </form>

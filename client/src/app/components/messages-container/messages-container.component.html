@@ -1,5 +1,5 @@
 <div class="message-container">
 
-  <app-message></app-message>
+  <app-message *ngFor="let message of (messages$ | async)" [message]="message"></app-message>
 
 </div>

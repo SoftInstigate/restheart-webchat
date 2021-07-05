@@ -1,6 +1,9 @@
-<div class="message owner">
+<div
+  class="message"
+  [ngClass]="userService.getCurrentUser() === message.nickname ? 'owner' : ''"
+>
   <div class="message-wrapper">
-    Ciao
-    <span class="message-timestamp">11:25</span>
+    {{ message.body }}
+    <span class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</span>
   </div>
 </div>

@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  MESSAGE_FEED: 'ws://localhost:8080/messages/_streams/all',
+  MESSAGE_URL : 'http://localhost:8080/messages?sort={"timestamp":1}'
 };
 
 /*

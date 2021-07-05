@@ -1,24 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import { Message } from '../models/message';
 import { webSocket, WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import {UserService} from './user.service';
+import {environment} from "../../environments/environment";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
-  private MESSAGE_FEED = 'ws://localhost:8080/messages/_streams/all';
-  private URL = 'http://localhost:8080/messages';
-
-  private h = {
-    Update: 'websocket',
-    Connection: 'Upgrade'
-  };
 
   private configuration: WebSocketSubjectConfig<Message> = {
-    url: this.MESSAGE_FEED,
+    url: environment.MESSAGE_FEED,
     openObserver: {
       next: () => console.log('Connection established!')
     },
@@ -27,25 +22,44 @@ export class MessageService {
     }
   };
   private ws: Subject<Message> = webSocket(this.configuration);
+
   private headers = { Authorization: 'Basic ' + window.btoa('admin:secret')};
 
+  private messages: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>([]);
 
-  constructor(private http: HttpClient, private userService: UserService) { }
+  constructor(private http: HttpClient, private userService: UserService) {
+    this.getMessageHistory().subscribe(history => this.messages.next(history));
+  }
 
 
-  openConnection(): Subject<Message> {
-    return this.ws;
+  getChatMessages(): Observable<Message[]> {
+    return this.messages.asObservable();
+  }
+
+
+  openConnection(): void {
+    this.ws.asObservable().pipe(
+      map((data) => {
+        const { nickname, body, timestamp } = data['fullDocument'];
+        return { nickname, body, timestamp };
+      })
+    ).subscribe(message => {
+      this.messages.next([
+        ...this.messages.getValue(),
+        message
+      ])
+    });
   }
 
   sendMessage(body: string): void {
     const message: Message = { body, timestamp: new Date(), nickname: this.userService.getCurrentUser() };
 
-    this.http.post(this.URL, message, { headers: this.headers }).subscribe();
+    this.http.post(environment.MESSAGE_URL, message).subscribe();
   }
 
 
-  getMessageHistory(): Observable<Message[]> {
-    return this.http.get<Message[]>(this.URL);
+  private getMessageHistory(): Observable<Message[]> {
+    return this.http.get<Message[]>(environment.MESSAGE_URL);
   }
 
 

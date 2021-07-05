@@ -27,21 +27,18 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.messageService.getMessageHistory().subscribe(messages => this.messages = messages);
+    // this.messageService.getMessageHistory().subscribe(messages => this.messages = messages);
 
-    this.messageService.openConnection().pipe(
-      map((data) => {
-        const { nickname, body, timestamp } = data['fullDocument'];
-        return { nickname, body, timestamp };
-      })
-    ).subscribe(
-      message => {
-        console.log(message);
-        this.messages.push(message);
-      },
-      err => console.error('Error occured: ', err),
-      () => console.log('Bye')
-    );
+    // this.messageService.openConnection().subscribe(
+    //   message => {
+    //     console.log(message);
+    //
+    //     this.messages.push(message);
+    //   },
+    //   err => console.error('Error occured: ', err),
+    //   () => console.log('Bye')
+    // );
+    this.messageService.openConnection();
   }
 
 
@@ -52,9 +49,9 @@ export class HomeComponent implements OnInit {
 
 
 
-  logout():void {
-    this.userService.logout();
-    this.router.navigateByUrl('pick-nickname');
-  }
+  // logout():void {
+  //   this.userService.logout();
+  //   this.router.navigateByUrl('pick-nickname');
+  // }
 
 }

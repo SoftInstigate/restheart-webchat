@@ -1,5 +1,5 @@
 .message-input {
-  width: min(50vw, 900px);
+  width: min(98%, 900px);
   display: flex;
   justify-content: center;
   position: relative;
@@ -24,6 +24,7 @@
   .send-btn {
     background: none;
     border: none;
+    cursor: pointer;
     margin-left: .5rem;
   }
 
@@ -32,3 +33,4 @@
   }
 
 }
+
