@@ -4,8 +4,8 @@ This examples uses [RESTHeart](https://restheart.org) WebsSockets API to create 
 For more information refer to the [Change Streams section](https://restheart.org/docs/change-streams/) in the RESTheart official documentation.
 
 ## Requirements
-- RESTHeart 6
-- MongoDB
+- RESTHeart (at least v6)
+- MongoDB (at least v3.6)
 - Angular 12
 
 ## Quick start
