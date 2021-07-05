@@ -213,7 +213,7 @@
     //flex-grow: 1;
     overflow: hidden;
     align-items: center;
-    height: 5.7rem;
+    height: 5.8rem;
     padding: .5rem .8125rem .5rem 1.5rem;
 
     .chat-avatar {
@@ -245,12 +245,25 @@
     //overflow: scroll;
     //overflow-x: hidden;
     overflow: hidden;
+    overflow-y: auto;
     display: flex;
     flex-shrink: 1;
     flex-grow: 0;
     flex-direction: column;
     align-items: center;
     margin-bottom: .5rem;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent);
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      background-color: #1d1d1e;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #757576;
+    }
 
 
     & > * {
@@ -322,22 +335,6 @@
     }
 
   }
-
-  .chat-body:hover {
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent);
-    overflow-y: auto;
-
-    ::-webkit-scrollbar {
-      width: 5px;
-      background-color: #1d1d1e;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #757576;
-    }
-  }
-
 
 
   .message-input {
