@@ -1,5 +1,7 @@
-<div class="message-container">
+<div class="message-container" #container >
 
   <app-message *ngFor="let message of (messages$ | async)" [message]="message"></app-message>
+
+  <div #flag></div>
 
 </div>

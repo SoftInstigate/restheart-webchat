@@ -12,6 +12,9 @@ import { map } from "rxjs/operators";
 })
 export class MessageService {
 
+  private onMessageSent: Subject<string> = new Subject();
+  onMessageSent$ = this.onMessageSent.asObservable();
+
   private configuration: WebSocketSubjectConfig<Message> = {
     url: environment.MESSAGE_FEED,
     openObserver: {
@@ -52,7 +55,7 @@ export class MessageService {
   sendMessage(body: string): void {
     const message: Message = { body, timestamp: new Date(), nickname: this.userService.getCurrentUser() };
 
-    this.http.post(environment.MESSAGE_URL, message).subscribe();
+    this.http.post(environment.MESSAGE_URL, message).subscribe(() => this.onMessageSent.next('sent'));
   }
 
 
