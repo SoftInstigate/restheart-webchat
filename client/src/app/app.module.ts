@@ -19,6 +19,8 @@ import { MessageInputComponent } from './components/message-input/message-input.
 import { MessagesContainerComponent } from './components/messages-container/messages-container.component';
 import * as Sentry from "@sentry/angular";
 import { Router } from '@angular/router';
+import { SentryErrorHandler } from './utils/sentry-error-handler';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,7 @@ import { Router } from '@angular/router';
     MessageComponent,
     MessageInputComponent,
     MessagesContainerComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,23 +47,15 @@ import { Router } from '@angular/router';
     ReactiveFormsModule
   ],
   providers: [
-    {
-      provide: ErrorHandler,
-      useValue: Sentry.createErrorHandler({
-        showDialog: true,
-      }),
-    },
-    {
-      provide: Sentry.TraceService,
-      deps: [Router],
-    },
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
+    { provide: Sentry.TraceService, deps: [Router], },
     {
       provide: APP_INITIALIZER,
-      useFactory: () => () => {},
+      useFactory: () => () => { },
       deps: [Sentry.TraceService],
       multi: true,
     },
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

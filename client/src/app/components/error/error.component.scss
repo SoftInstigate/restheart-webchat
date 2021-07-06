@@ -1,0 +1,28 @@
+.container {
+  background-color: #0e1621;
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container h1 {
+  font-size: 2.5rem;
+}
+
+.container p {
+  font-size: 1.1rem;
+}
+
+button {
+    border: none;
+    background: #5288c1 none;
+    cursor: pointer;
+    color: white;
+    margin: 0.7em 0;
+    padding: 0.5em 1.8em;
+    text-align: center;
+  }
+  

@@ -1,3 +1,4 @@
+import { ErrorComponent } from './components/error/error.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
     path: 'pick-nickname',
     component: NicknamePickerComponent
+  },
+  {
+    path: 'error',
+    component: ErrorComponent
   },
   {
     path: '**',
