@@ -29,13 +29,29 @@
 
 
   .message-container {
+    position: relative;
     width: min(100%, 900px);
     min-height: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
-    padding: 1rem 1rem 0 1.125rem;
+    padding: 4rem 1rem 0 1.125rem;
+  }
+
+  .load-more-btn {
+    border: none;
+    width: 150px;
+    background: #5288c1 none;
+    cursor: pointer;
+    color: white;
+    position: absolute;
+    border-radius: .7rem;
+    top:0;
+    left: calc(50% - 75px);
+    margin: 0.7em 0;
+    padding: 0.5em 1.8em;
+    text-align: center;
   }
 
 }

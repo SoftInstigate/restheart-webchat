@@ -1,5 +1,5 @@
 <div class="message-container" #container>
-
+  <button class="load-more-btn" (click)="infiniteScroll()">Load more</button>
   <app-message #msg *ngFor="let message of (messages$ | async);" [message]="message"></app-message>
 
   <div #flag></div>

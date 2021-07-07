@@ -26,12 +26,18 @@ export class MessageService {
   private messages: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>([]);
 
   constructor(private http: HttpClient, private userService: UserService) {
-    this.getMessageHistory().subscribe(history => this.messages.next(history));
+    this.getMessageHistory().subscribe(history => this.messages.next(history.reverse()));
   }
 
 
   getChatMessages(): Observable<Message[]> {
     return this.messages.asObservable();
+  }
+
+  getPastMessages(page = 1): void {
+    this.getMessageHistory(page)
+      .subscribe(history =>
+        this.messages.next([...history.reverse(), ...this.messages.getValue()]))
   }
 
 
@@ -56,7 +62,7 @@ export class MessageService {
   }
 
 
-  private getMessageHistory(): Observable<Message[]> {
-    return this.http.get<Message[]>(environment.MESSAGE_URL);
+  private getMessageHistory(page = 1, pageSize = 40): Observable<Message[]> {
+    return this.http.get<Message[]>(`${environment.MESSAGE_URL}?page=${page}&pagesize=${pageSize}&sort={timestamp:-1}`);
   }
 }
