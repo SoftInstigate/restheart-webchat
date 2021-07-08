@@ -38,6 +38,13 @@ form {
 #nickname {
   border-radius: var(--border-radius);
   padding: .5rem .7rem;
+  border: none;
+}
+
+#nickname:focus {
+  border: 3px solid var(--bg-secondary);
+  border-radius: var(--border-radius);
+  outline: none;
 }
 
 button {

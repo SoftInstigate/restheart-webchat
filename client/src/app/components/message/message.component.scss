@@ -8,14 +8,11 @@
     padding: .3125rem .5rem .375rem;
     width: max-content;
     max-width: 25rem;
-    background-color: var(--secondary);
-    border-radius: .75rem .75rem .75rem 0;
+    border-radius: var(--border-radius) var(--border-radius) var(--border-radius) 0;
     margin: 0;
     position: relative;
     word-break: break-word;
     line-height: 1.3125;
-    text-align: initial;
-    display: flow-root;
 
     .message-timestamp {
       height: 1.25rem;
@@ -47,9 +44,9 @@
   //background-color: var(--accent);
   //
   background-color: var(--bg-primary);
-  outline: 2px solid var(--bg-secondary);
+  border: 2px solid var(--bg-secondary);
   border-bottom-right-radius: 0;
-  border-bottom-left-radius: .75rem;
+  border-bottom-left-radius: var(--border-radius);
 }
 
 p {

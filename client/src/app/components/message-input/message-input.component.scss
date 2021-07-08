@@ -7,7 +7,7 @@
   padding: .5rem 1rem;
   align-items: center;
   border-radius: .75rem;
-  background: #252335;
+  background: var(--bg-primary-dark);
 
   .message-box {
     color: var(--text-secondary);

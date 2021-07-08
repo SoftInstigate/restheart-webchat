@@ -17,14 +17,20 @@ export class MessageService {
     url: environment.MESSAGE_FEED,
     openObserver: {
       next: () => {
-        // console.log('Connected!');
+        console.log('Connected!');
         this.statusService.isConnected(true);
 
-        this.getMessageHistory()
-          .subscribe(
-            history => this.messages.next(history.reverse()),
-            (err) => console.error(err)
-          );
+        if(!this.hasHistoryBeenLoaded) {
+          this.getMessageHistory()
+            .subscribe(
+              history => {
+                this.messages.next(history.reverse());
+                this.hasHistoryBeenLoaded = true;
+                console.log('History has been loaded')
+              },
+              (err) => console.error(err)
+            );
+        }
       }
     },
     closeObserver: {
@@ -37,6 +43,8 @@ export class MessageService {
   private ws: Subject<Message> = webSocket(this.configuration);
 
   private messages: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>([]);
+
+  private hasHistoryBeenLoaded: boolean = false;
 
   constructor(private http: HttpClient, private userService: UserService, private statusService: StatusService) { }
 
