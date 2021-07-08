@@ -9,6 +9,9 @@
   height: 5.8rem;
   padding: .5rem .8125rem .5rem 1.5rem;
 
+  #reconnecting {
+    color: var(--bg-accent);
+  }
 
   .chat-avatar {
     display: flex;

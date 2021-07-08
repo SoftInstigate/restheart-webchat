@@ -17,8 +17,12 @@
 
 
     <input type="text" id="nickname" [formControl]="nicknameControl">
-    <button type="submit" [disabled]="!nicknameControl.valid">Let's chat!</button>
-
-
+    <button
+      type="submit"
+      [disabled]="!nicknameControl.valid"
+      [ngClass]="!nicknameControl.valid ? 'disabled' : ''"
+    >
+      Let's chat!
+    </button>
   </form>
 </div>

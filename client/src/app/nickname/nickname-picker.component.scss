@@ -43,10 +43,14 @@ form {
 button {
   border-radius: var(--border-radius);
   border: none;
-  background: #2196f3 none;
+  background: #2196f3;
   cursor: pointer;
   color: white;
   margin: 1em 0;
 	padding: .6em 2.2em;
   text-align: center;
+}
+
+.disabled {
+  background: var(--text-secondary)!important;
 }

@@ -8,8 +8,7 @@ import {map} from "rxjs/operators";
 export class StatusService {
 
   private connectionStatus: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  connectionStatus$: Observable<string> = this.connectionStatus.asObservable()
-    .pipe(map(state => state ? 'Connected' : 'Trying to reconnect'));
+  connectionStatus$: Observable<boolean> = this.connectionStatus.asObservable();
 
   constructor() { }
 

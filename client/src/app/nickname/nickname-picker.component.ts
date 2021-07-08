@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {UserService} from '../services/user.service';
+import {isEmpty} from "../validators/isEmpty.validator";
+
 
 @Component({
   selector: 'app-nickname',
@@ -11,7 +13,11 @@ import {UserService} from '../services/user.service';
 export class NicknamePickerComponent implements OnInit {
 
   nicknameControl: FormControl = new FormControl('',
-    [Validators.minLength(3), Validators.maxLength(20)]
+    [
+      Validators.minLength(3),
+      Validators.maxLength(20),
+      isEmpty()
+    ]
   );
   redirectTo: string;
 
@@ -23,14 +29,13 @@ export class NicknamePickerComponent implements OnInit {
     this.redirectTo = this.activatedRoute.snapshot.queryParams.redirectTo;
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
 
   saveNickname(): void {
     this.userService.setCurrentUser(this.nicknameControl.value);
     this.router.navigateByUrl(this.redirectTo);
+    this.nicknameControl.reset('');
   }
 
 }

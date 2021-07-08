@@ -17,8 +17,9 @@ export class MessageService {
     url: environment.MESSAGE_FEED,
     openObserver: {
       next: () => {
-        console.log('Connected!');
+        // console.log('Connected!');
         this.statusService.isConnected(true);
+
         this.getMessageHistory()
           .subscribe(
             history => this.messages.next(history.reverse()),
@@ -57,8 +58,7 @@ export class MessageService {
   openConnection(): void {
     this.ws.pipe(
       retryWhen(errors => errors.pipe(
-        // delayWhen(() => timer( 3000))
-       delay(5000)
+       delay(environment.RECONNECTION_DELAY)
         )
       ),
       map((data) => {

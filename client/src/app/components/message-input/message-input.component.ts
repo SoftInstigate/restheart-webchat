@@ -25,7 +25,6 @@ export class MessageInputComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(`on submit: ${this.messageInput.value}`);
     this.messageService.sendMessage(this.messageInput.value);
     this.messageInput.reset('');
   }

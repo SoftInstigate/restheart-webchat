@@ -1,14 +1,10 @@
 
 <div class="chat-nickname">
+
   <p id="chat-name">Global WebChat</p>
 
-<!--  <p *ngIf="(statusService.connectionStatus$ | async) as status">Status: {{ status }}</p>-->
-  <p id="chat-status">
-    Connected: Let's chat!
-  </p>
-</div>
+  <p *ngIf="status.isConnected" id="chat-status">{{ status.message }}</p>
+  <p *ngIf="!status.isConnected" id="reconnecting">{{ status.message }}</p>
 
-<!--<div class="chat-info">-->
-<!--&lt;!&ndash;  <p class="last-seen">last seen recently</p>&ndash;&gt;-->
-<!--</div>-->
+</div>
 
