@@ -7,9 +7,10 @@
   padding: .5rem 1rem;
   align-items: center;
   border-radius: .75rem;
-  background: var(--secondary);
+  background: #252335;
 
   .message-box {
+    color: var(--text-secondary);
     border: none;
     background: none;
     height: 50px;
@@ -29,7 +30,7 @@
   }
 
   .send-btn span {
-    color: var(--accent);
+    color: var(--bg-secondary);
   }
 
 }

@@ -46,11 +46,11 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
           firstValue = value;
         }, null)
       )
-      .subscribe(console.log);
+      .subscribe();
   }
 
   infiniteScroll() {
-    this.messageService.getPastMessages(++this.currentPage);
+    this.messageService.getOlderMessages(++this.currentPage);
   }
 
   scrollBottom(behavior: ScrollBehavior = 'auto'): void {

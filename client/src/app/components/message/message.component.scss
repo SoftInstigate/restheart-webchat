@@ -44,7 +44,15 @@
 }
 
 .message.owner .message-wrapper {
-  background-color: var(--accent);
+  //background-color: var(--accent);
+  //
+  background-color: var(--bg-primary);
+  outline: 2px solid var(--bg-secondary);
   border-bottom-right-radius: 0;
   border-bottom-left-radius: .75rem;
+}
+
+p {
+  font-weight: bold;
+  color: var(--bg-accent);
 }

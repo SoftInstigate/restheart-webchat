@@ -5,10 +5,22 @@ body,
 *::after {
   box-sizing: border-box;
   margin: 0;
-  color: var(--text-primary);
+  color: #f0f0f0;
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   line-height: 1.5;
   text-align: left;
   font-size: 16px;
 }
+
+
+.other-message {
+  background-color: var(--bg-primary)!important;
+  outline: 2px solid var(--bg-accent);
+}
+
+.timestamp-other {
+  color: #f0f0f0!important;
+}
+
+

@@ -42,7 +42,7 @@
   .load-more-btn {
     border: none;
     width: 150px;
-    background: #5288c1 none;
+    background: var(--bg-secondary) none;
     cursor: pointer;
     color: white;
     position: absolute;
@@ -54,4 +54,17 @@
     text-align: center;
   }
 
+}
+
+#day-divider {
+  border: none;
+  width: 150px;
+  //background-color: var(--text-secondary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: .7rem;
+  margin: 0 auto;
+  padding: .4em .7em;
+  text-align: center;
+  position: relative;
 }

@@ -1,11 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import {BehaviorSubject, Observable, Subject, throwError, timer} from 'rxjs';
 import { Message } from '../models/message';
 import { webSocket, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { UserService } from './user.service';
 import { environment } from "../../environments/environment";
-import { map } from "rxjs/operators";
+import {catchError, delay, delayWhen, map, retryWhen, startWith, tap} from "rxjs/operators";
+import {StatusService} from "./status.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,54 +16,88 @@ export class MessageService {
   private configuration: WebSocketSubjectConfig<Message> = {
     url: environment.MESSAGE_FEED,
     openObserver: {
-      next: () => console.log('Connection established!')
+      next: () => {
+        console.log('Connected!');
+        this.statusService.isConnected(true);
+        this.getMessageHistory()
+          .subscribe(
+            history => this.messages.next(history.reverse()),
+            (err) => console.error(err)
+          );
+      }
     },
-    closingObserver: {
-      next: () => console.log('Connection has been closed')
+    closeObserver: {
+      next: () => {
+        console.log('Trying to reconnect');
+        this.statusService.isConnected(false);
+      }
     }
   };
   private ws: Subject<Message> = webSocket(this.configuration);
 
   private messages: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>([]);
 
-  constructor(private http: HttpClient, private userService: UserService) {
-    this.getMessageHistory().subscribe(history => this.messages.next(history.reverse()));
-  }
-
+  constructor(private http: HttpClient, private userService: UserService, private statusService: StatusService) { }
 
   getChatMessages(): Observable<Message[]> {
     return this.messages.asObservable();
   }
 
-  getPastMessages(page = 1): void {
+  getOlderMessages(page = 1): void {
     this.getMessageHistory(page)
-      .subscribe(history =>
-        this.messages.next([...history.reverse(), ...this.messages.getValue()]))
+      .subscribe(
+        history => {
+          this.messages.next([...history.reverse(), ...this.messages.getValue()])
+        },
+        () => console.error('Could not load messages')
+      )
   }
 
 
   openConnection(): void {
-    this.ws.asObservable().pipe(
+    this.ws.pipe(
+      retryWhen(errors => errors.pipe(
+        // delayWhen(() => timer( 3000))
+       delay(5000)
+        )
+      ),
       map((data) => {
         const { nickname, body, timestamp } = data['fullDocument'];
         return { nickname, body, timestamp };
-      })
-    ).subscribe(message => {
-      this.messages.next([
-        ...this.messages.getValue(),
-        message
-      ])
-    });
+      }),
+    ).subscribe(
+        message => {
+          this.messages.next([
+            ...this.messages.getValue(),
+            message
+          ])
+      },
+      (error) => {
+        console.error(`Got an error: ${error}`);
+      });
   }
 
   sendMessage(body: string): void {
     const message: Message = { body, timestamp: new Date(), nickname: this.userService.getCurrentUser() };
 
-    this.http.post(environment.MESSAGE_URL, message).subscribe();
+    this.http.post(environment.MESSAGE_URL, message).pipe(catchError(this.errorHandler)).subscribe();
   }
 
 
-  private getMessageHistory(page = 1, pageSize = 40): Observable<Message[]> {
-    return this.http.get<Message[]>(`${environment.MESSAGE_URL}?page=${page}&pagesize=${pageSize}&sort={timestamp:-1}`);
+  private getMessageHistory(page = 1, pageSize = 15): Observable<Message[]> {
+    return this.http.get<Message[]>(`${environment.MESSAGE_URL}?page=${page}&pagesize=${pageSize}&sort={timestamp:-1}`)
+      .pipe(catchError(this.errorHandler));
   }
+
+
+  private errorHandler = (error: HttpErrorResponse) =>  {
+    let errorMessage = '';
+    if(error.status === 0) {
+      errorMessage = `Network error. Status was: ${error.status}.`;
+    } else {
+      errorMessage = `Backend response status: ${error.status}. Backend body: ${error.error.message}`
+    }
+    return throwError(errorMessage);
+  }
+
 }

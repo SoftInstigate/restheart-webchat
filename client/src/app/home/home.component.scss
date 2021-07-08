@@ -4,8 +4,15 @@
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr;
+  position: relative;
 }
 
+p {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
 
 
 

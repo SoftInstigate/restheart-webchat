@@ -2,8 +2,19 @@
   class="message"
   [ngClass]="userService.getCurrentUser() === message.nickname ? 'owner' : ''"
 >
-  <div class="message-wrapper">
+  <div
+    class="message-wrapper"
+    [ngClass]="userService.getCurrentUser() !== message.nickname ? 'other-message' : ''"
+  >
+    <p
+      *ngIf="userService.getCurrentUser() !== message.nickname"
+    >
+      {{message.nickname}}
+    </p>
+
     {{ message.body }}
-    <span class="message-timestamp">{{ message.timestamp | date:'shortTime' }}</span>
+    <span class="message-timestamp"
+          [ngClass]="userService.getCurrentUser() !== message.nickname ? 'timestamp-other' : ''"
+    >{{ message.timestamp | date:'shortTime' }}</span>
   </div>
 </div>

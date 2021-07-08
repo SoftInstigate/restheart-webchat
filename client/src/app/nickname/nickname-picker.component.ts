@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {UserService} from '../services/user.service';
 
@@ -10,7 +10,9 @@ import {UserService} from '../services/user.service';
 })
 export class NicknamePickerComponent implements OnInit {
 
-  nicknameControl: FormControl = new FormControl('');
+  nicknameControl: FormControl = new FormControl('',
+    [Validators.minLength(3), Validators.maxLength(20)]
+  );
   redirectTo: string;
 
   constructor(
@@ -22,6 +24,7 @@ export class NicknamePickerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
 
