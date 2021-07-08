@@ -47,14 +47,14 @@ import { ErrorComponent } from './components/error/error.component';
     ReactiveFormsModule
   ],
   providers: [
-    // { provide: ErrorHandler, useClass: SentryErrorHandler },
-    // { provide: Sentry.TraceService, deps: [Router], },
-    // {
-    //   provide: APP_INITIALIZER,
-    //   useFactory: () => () => { },
-    //   deps: [Sentry.TraceService],
-    //   multi: true,
-    // },
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
+    { provide: Sentry.TraceService, deps: [Router], },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => { },
+      deps: [Sentry.TraceService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })
