@@ -69,7 +69,7 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
   scrollBottom(behavior: ScrollBehavior = 'auto', scrollRef?: MessageComponent): void {
     this.elRef.nativeElement.style.scrollBehavior = behavior;
     if(scrollRef) {
-      this.elRef.nativeElement.scrollTop = scrollRef.elRef.nativeElement.offsetTop - 50;
+      this.elRef.nativeElement.scrollTop = scrollRef.elRef.nativeElement.offsetTop - 400;
     } else {
       this.elRef.nativeElement.scrollTop = this.elRef.nativeElement.scrollHeight;
     }
