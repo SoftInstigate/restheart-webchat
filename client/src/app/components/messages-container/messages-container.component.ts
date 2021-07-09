@@ -10,8 +10,9 @@ import {
 import { MessageService } from '../../services/message.service';
 import { MessageComponent } from '../message/message.component';
 import { Message } from '../../models/message';
-import { filter, map, scan, startWith } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { scan, startWith} from 'rxjs/operators';
+import { Observable} from 'rxjs';
+import {StatusService} from "../../services/status.service";
 
 @Component({
   selector: 'app-messages-container',
@@ -24,38 +25,53 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
 
   messages$: Observable<Message[]>;
   currentPage = 1;
+  firstElement: MessageComponent;
+
+  loadMoreAction: boolean = false;
 
   constructor(
     private messageService: MessageService,
-    private elRef: ElementRef
+    private elRef: ElementRef,
+    public statusService: StatusService
   ) { }
 
   ngOnInit(): void {
+
     this.messages$ = this.messageService.getChatMessages();
   }
 
   ngAfterViewInit(): void {
-
-    this.containerChildren.changes
-      .pipe(
-        startWith([]),
-        scan((firstValue, value) => {
-          if (!firstValue) {
-            this.scrollBottom('auto');
-          } else this.scrollBottom('smooth');
-          firstValue = value;
-        }, null)
+    this.containerChildren.changes.pipe(
+      startWith([]),
+      scan((firstValue, value) => {
+          if(!this.loadMoreAction) {
+            if (!firstValue ) {
+              this.scrollBottom('auto');
+            } else this.scrollBottom('smooth');
+            firstValue = value;
+          } else {
+            this.scrollBottom('auto', this.firstElement);
+            this.loadMoreAction = !this.loadMoreAction;
+            this.firstElement = null;
+          }
+        },
+        null
       )
-      .subscribe();
+    ).subscribe();
   }
 
-  infiniteScroll() {
+  loadMore() {
+    this.firstElement = this.containerChildren.first;
+    this.loadMoreAction = true;
     this.messageService.getOlderMessages(++this.currentPage);
   }
 
-  scrollBottom(behavior: ScrollBehavior = 'auto'): void {
+  scrollBottom(behavior: ScrollBehavior = 'auto', scrollRef?: MessageComponent): void {
     this.elRef.nativeElement.style.scrollBehavior = behavior;
-    this.elRef.nativeElement.scrollTop = this.elRef.nativeElement.scrollHeight;
-    //this.flag.nativeElement.scrollIntoView({ block: "end", behavior: behavior })
+    if(scrollRef) {
+      this.elRef.nativeElement.scrollTop = scrollRef.elRef.nativeElement.offsetTop - 50;
+    } else {
+      this.elRef.nativeElement.scrollTop = this.elRef.nativeElement.scrollHeight;
+    }
   }
 }

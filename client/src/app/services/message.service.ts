@@ -1,6 +1,6 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, Subject, throwError, timer} from 'rxjs';
+import {BehaviorSubject, interval, Observable, Subject, Subscription, throwError, timer} from 'rxjs';
 import { Message } from '../models/message';
 import { webSocket, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { UserService } from './user.service';
@@ -13,10 +13,19 @@ import {StatusService} from "./status.service";
 })
 export class MessageService {
 
+  private intervalSubscription: Subscription;
+
   private configuration: WebSocketSubjectConfig<Message> = {
     url: environment.MESSAGE_FEED,
     openObserver: {
       next: () => {
+        this.intervalSubscription = interval(
+          30000
+        ).subscribe(() => {
+          console.log('Sending ping to ws');
+          this.ws.next({nickname: '', body: '', timestamp: new Date()})
+        });
+
         console.log('Connected!');
         this.statusService.isConnected(true);
 
@@ -35,6 +44,9 @@ export class MessageService {
     },
     closeObserver: {
       next: () => {
+        if(this.intervalSubscription) {
+          this.intervalSubscription.unsubscribe();
+        }
         console.log('Trying to reconnect');
         this.statusService.isConnected(false);
       }

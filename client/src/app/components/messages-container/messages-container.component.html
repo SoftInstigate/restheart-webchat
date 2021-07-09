@@ -1,5 +1,5 @@
 <div class="message-container">
-  <button class="load-more-btn" (click)="infiniteScroll()">Load more</button>
+  <button class="load-more-btn" *ngIf="statusService.connectionStatus$ | async" (click)="loadMore()">Load more</button>
   <app-message #msg *ngFor="let message of (messages$ | async);" [message]="message"></app-message>
 <!--  <div id="day-divider">Today</div>-->
   <div #flag></div>
