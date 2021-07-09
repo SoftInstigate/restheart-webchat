@@ -24,7 +24,7 @@ export class NicknamePickerComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
   ) {
     this.redirectTo = this.activatedRoute.snapshot.queryParams.redirectTo;
   }

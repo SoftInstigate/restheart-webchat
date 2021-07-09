@@ -19,6 +19,8 @@
     "@angular/platform-browser": "~11.2.8",
     "@angular/platform-browser-dynamic": "~11.2.8",
     "@angular/router": "~11.2.8",
+    "@fortawesome/angular-fontawesome": "^0.9.0",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@sentry/angular": "^6.8.0",
     "@sentry/browser": "^6.8.0",
     "@sentry/tracing": "^6.8.0",

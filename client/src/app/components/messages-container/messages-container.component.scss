@@ -10,12 +10,12 @@
   align-items: center;
   margin-bottom: .5rem;
 
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent);
+  scrollbar-width: auto;
+  scrollbar-color: var(--bg-primary);
 
   &::-webkit-scrollbar {
     width: 5px;
-    background-color: #1d1d1e;
+    background-color: var(--bg-primary);
   }
 
   &::-webkit-scrollbar-thumb {

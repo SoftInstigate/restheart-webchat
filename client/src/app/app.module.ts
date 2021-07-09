@@ -44,7 +44,7 @@ import { ErrorComponent } from './components/error/error.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },
