@@ -98,9 +98,9 @@ export class MessageService {
   }
 
   sendMessage(message: string): void {
-    const toSend = { message,  $currentDate: {"timestamp": true}, from: this.userService.getCurrentUser() };
+    const toSend = { message, from: this.userService.getCurrentUser() };
 
-    this.http.post(`${environment.MESSAGE_URL}?wm=upsert`, toSend).pipe(
+    this.http.post(environment.MESSAGE_URL, toSend).pipe(
       catchError(this.errorHandler)
     ).subscribe();
   }
