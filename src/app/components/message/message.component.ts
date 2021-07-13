@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import {Message} from "../../models/message";
 import {UserService} from "../../services/user.service";
 
@@ -11,11 +11,16 @@ export class MessageComponent implements OnInit {
 
   @Input() message: Message;
 
+  isMine: string = '';
+
   constructor(public userService: UserService, public elRef: ElementRef) {
   }
 
   ngOnInit(): void {
-
+    this.isMine = this.userService.getCurrentUser() === this.message.from
+        ? 'owner'
+        : 'other-message'
   }
+
 
 }

@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   MESSAGE_FEED: 'wss://demo.restheart.org/messages/_streams/all',
-  MESSAGE_URL : 'https://demo.restheart.org/messages/',
+  MESSAGE_URL : 'https://demo.restheart.org/messages/?wm=upsert',
   SENTRY_DSN: "https://266665e29f964150b4f62aa9395046be@o912054.ingest.sentry.io/5848878",
   SENTRY_TRACING_ORIGINS: ["localhost"],
   RECONNECTION_DELAY: 3000
@@ -18,4 +18,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

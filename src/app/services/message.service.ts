@@ -5,7 +5,7 @@ import { Message } from '../models/message';
 import { webSocket, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { UserService } from './user.service';
 import { environment } from "../../environments/environment";
-import {catchError, delay, delayWhen, map, retryWhen, startWith, tap} from "rxjs/operators";
+import {catchError, delay, delayWhen, filter, map, retryWhen, startWith, tap} from "rxjs/operators";
 import {StatusService} from "./status.service";
 
 @Injectable({
@@ -23,7 +23,7 @@ export class MessageService {
           30000
         ).subscribe(() => {
           console.log('Sending ping to ws');
-          this.ws.next({nickname: '', body: '', timestamp: new Date()})
+          this.ws.next({from: '', message: '', timestamp: {$date: 123}})
         });
 
         console.log('Connected!');
@@ -82,11 +82,13 @@ export class MessageService {
         )
       ),
       map((data) => {
-        const { nickname, body, timestamp } = data['fullDocument'];
-        return { nickname, body, timestamp };
+        console.log(`Incoming message: ${data}`);
+        const { from, message, timestamp } = data['fullDocument'];
+        return { from, message, timestamp };
       }),
     ).subscribe(
         message => {
+          console.log(`Message from WS: ${message}`)
           this.messages.next([
             ...this.messages.getValue(),
             message
@@ -97,10 +99,14 @@ export class MessageService {
       });
   }
 
-  sendMessage(body: string): void {
-    const message: Message = { body, timestamp: new Date(), nickname: this.userService.getCurrentUser() };
-
-    this.http.post(environment.MESSAGE_URL, message).pipe(catchError(this.errorHandler)).subscribe();
+  sendMessage(message: string): void {
+    const toSend = { message,  $currentDate: {"timestamp": true}, from: this.userService.getCurrentUser() };
+    console.log('Message to send', toSend);
+    this.http.post(environment.MESSAGE_URL, toSend).pipe(
+      catchError(this.errorHandler)
+    ).subscribe({
+      error: (err) => console.error(`Ops...${err.message}`)
+    });
   }
 
 

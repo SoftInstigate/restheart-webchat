@@ -21,6 +21,7 @@ import * as Sentry from "@sentry/angular";
 import { Router } from '@angular/router';
 import { SentryErrorHandler } from './utils/sentry-error-handler';
 import { ErrorComponent } from './components/error/error.component';
+import { FromMillisToDatePipe } from './pipes/from-millis-to-date.pipe';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ErrorComponent } from './components/error/error.component';
     MessageInputComponent,
     MessagesContainerComponent,
     ErrorComponent,
+    FromMillisToDatePipe,
   ],
   imports: [
     BrowserModule,
