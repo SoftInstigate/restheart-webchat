@@ -4,3 +4,9 @@ permissions:
     - roles: [ $unauthenticated ]
       predicate: >
         path-prefix('/messages')
+        and qparams-whitelist(wm, filter, pagesize, page, sort)
+      mongo:
+        allowWriteMode: true
+      priority:
+        200
+

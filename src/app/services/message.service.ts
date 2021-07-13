@@ -82,13 +82,11 @@ export class MessageService {
         )
       ),
       map((data) => {
-        console.log(`Incoming message: ${data}`);
         const { from, message, timestamp } = data['fullDocument'];
         return { from, message, timestamp };
       }),
     ).subscribe(
         message => {
-          console.log(`Message from WS: ${message}`)
           this.messages.next([
             ...this.messages.getValue(),
             message
@@ -101,12 +99,10 @@ export class MessageService {
 
   sendMessage(message: string): void {
     const toSend = { message,  $currentDate: {"timestamp": true}, from: this.userService.getCurrentUser() };
-    console.log('Message to send', toSend);
-    this.http.post(environment.MESSAGE_URL, toSend).pipe(
+
+    this.http.post(`${environment.MESSAGE_URL}?wm=upsert`, toSend).pipe(
       catchError(this.errorHandler)
-    ).subscribe({
-      error: (err) => console.error(`Ops...${err.message}`)
-    });
+    ).subscribe();
   }
 
 
