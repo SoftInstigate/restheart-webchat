@@ -5,10 +5,9 @@
   flex-direction: row;
 
   .message-wrapper {
-    padding: .3125rem .5rem .375rem;
     width: max-content;
+    padding: .3125rem .5rem .375rem;
     max-width: 25rem;
-    border-radius: var(--border-radius) var(--border-radius) var(--border-radius) 0;
     margin: 0;
     position: relative;
     word-break: break-word;
@@ -22,7 +21,7 @@
       bottom: auto !important;
       float: right;
       line-height: 1;
-      margin-left: .4375rem;
+      margin-left: .5rem;
       margin-right: .12rem;
       font-size: .8rem;
       display: flex;
@@ -36,18 +35,17 @@
 
 }
 
-.message.owner {
-  flex-direction: row-reverse;
+.message.owner .message-wrapper{
+  margin-left: auto;
+  border: 2px solid var(--bg-secondary);
+  border-radius: var(--border-radius) var(--border-radius) 0 var(--border-radius);
 }
 
-.message.owner .message-wrapper {
-  //background-color: var(--accent);
-  //
-  background-color: var(--bg-primary);
-  border: 2px solid var(--bg-secondary);
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: var(--border-radius);
+.message.other .message-wrapper {
+  border: 2px solid var(--bg-accent);
+  border-radius: var(--border-radius) var(--border-radius) var(--border-radius) 0;
 }
+
 
 p {
   font-weight: bold;

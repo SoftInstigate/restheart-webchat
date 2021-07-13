@@ -19,7 +19,7 @@ export class MessageComponent implements OnInit {
   ngOnInit(): void {
     this.isMine = this.userService.getCurrentUser() === this.message.from
         ? 'owner'
-        : 'other-message'
+        : 'other'
   }
 
 

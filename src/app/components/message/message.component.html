@@ -1,11 +1,9 @@
 <div
   class="message"
   [ngClass]="isMine"
+  *ngIf="message.from"
 >
-  <div
-    class="message-wrapper"
-    [ngClass]="isMine"
-  >
+  <div class="message-wrapper">
     <p
       *ngIf="userService.getCurrentUser() !== message.from"
     >
@@ -13,10 +11,11 @@
     </p>
 
     {{ message.message }}
-    <span *ngIf="message.timestamp" class="message-timestamp"
-          [ngClass]="userService.getCurrentUser() !== message.from ? 'timestamp-other' : ''"
-    >
+
+    <span *ngIf="message.timestamp && message.timestamp.$date" class="message-timestamp">
+
       {{ message.timestamp.$date | fromMillisToDate | date:'shortTime'}}
     </span>
+
   </div>
 </div>
