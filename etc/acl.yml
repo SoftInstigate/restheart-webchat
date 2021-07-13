@@ -3,10 +3,26 @@
 permissions:
     - roles: [ $unauthenticated ]
       predicate: >
-        path-prefix('/messages')
-        and qparams-whitelist(wm, filter, pagesize, page, sort)
+        method(GET)
+        and path-prefix('/messages') 
+      priority:
+        200
+    - roles: [ $unauthenticated ]
+      predicate: >
+        method(POST)
+        and path('/messages')
       mongo:
-        allowWriteMode: true
+        mergeRequest: >
+          {"timestamp": "@now"}
+      priority:
+        200
+    - roles: [ $unauthenticated ]
+      predicate: >
+        method(POST)
+        and path('/messages')
+      mongo:
+        mergeRequest: >
+          {"timestamp": "@now"}
       priority:
         200
 
