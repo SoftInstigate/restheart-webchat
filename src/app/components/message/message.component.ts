@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import {Message} from "../../models/message";
-import {UserService} from "../../services/user.service";
+import {Message} from '../../models/message';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-message',
@@ -11,7 +11,7 @@ export class MessageComponent implements OnInit {
 
   @Input() message: Message;
 
-  isMine: string = '';
+  isMine = '';
 
   constructor(public userService: UserService, public elRef: ElementRef) {
   }
@@ -19,7 +19,7 @@ export class MessageComponent implements OnInit {
   ngOnInit(): void {
     this.isMine = this.userService.getCurrentUser() === this.message.from
         ? 'owner'
-        : 'other'
+        : 'other';
   }
 
 

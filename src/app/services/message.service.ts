@@ -4,9 +4,9 @@ import {BehaviorSubject, interval, Observable, Subject, Subscription, throwError
 import { Message } from '../models/message';
 import { webSocket, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { UserService } from './user.service';
-import { environment } from "../../environments/environment";
-import {catchError, delay, delayWhen, filter, map, retryWhen, startWith, tap} from "rxjs/operators";
-import {StatusService} from "./status.service";
+import { environment } from '../../environments/environment';
+import {catchError, delay, delayWhen, filter, map, retryWhen, startWith, tap} from 'rxjs/operators';
+import {StatusService} from './status.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,19 +23,19 @@ export class MessageService {
           30000
         ).subscribe(() => {
           console.log('Sending ping to ws');
-          this.ws.next({from: '', message: '', timestamp: {$date: 123}})
+          this.ws.next({from: '', message: '', timestamp: {$date: 123}});
         });
 
         console.log('Connected!');
         this.statusService.isConnected(true);
 
-        if(!this.hasHistoryBeenLoaded) {
+        if (!this.hasHistoryBeenLoaded) {
           this.getMessageHistory()
             .subscribe(
               history => {
                 this.messages.next(history.reverse());
                 this.hasHistoryBeenLoaded = true;
-                console.log('History has been loaded')
+                console.log('History has been loaded');
               },
               (err) => console.error(err)
             );
@@ -44,7 +44,7 @@ export class MessageService {
     },
     closeObserver: {
       next: () => {
-        if(this.intervalSubscription) {
+        if (this.intervalSubscription) {
           this.intervalSubscription.unsubscribe();
         }
         console.log('Trying to reconnect');
@@ -56,7 +56,7 @@ export class MessageService {
 
   private messages: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>([]);
 
-  private hasHistoryBeenLoaded: boolean = false;
+  private hasHistoryBeenLoaded = false;
 
   constructor(private http: HttpClient, private userService: UserService, private statusService: StatusService) { }
 
@@ -68,10 +68,10 @@ export class MessageService {
     this.getMessageHistory(page)
       .subscribe(
         history => {
-          this.messages.next([...history.reverse(), ...this.messages.getValue()])
+          this.messages.next([...history.reverse(), ...this.messages.getValue()]);
         },
         () => console.error('Could not load messages')
-      )
+      );
   }
 
 
@@ -82,7 +82,7 @@ export class MessageService {
         )
       ),
       map((data) => {
-        const { from, message, timestamp } = data['fullDocument'];
+        const { from, message, timestamp } = data.fullDocument;
         return { from, message, timestamp };
       }),
     ).subscribe(
@@ -90,7 +90,7 @@ export class MessageService {
           this.messages.next([
             ...this.messages.getValue(),
             message
-          ])
+          ]);
       },
       (error) => {
         console.error(`Got an error: ${error}`);
@@ -114,10 +114,10 @@ export class MessageService {
 
   private errorHandler = (error: HttpErrorResponse) =>  {
     let errorMessage = '';
-    if(error.status === 0) {
+    if (error.status === 0) {
       errorMessage = `Network error. Status was: ${error.status}.`;
     } else {
-      errorMessage = `Backend response status: ${error.status}. Backend body: ${error.error.message}`
+      errorMessage = `Backend response status: ${error.status}. Backend body: ${error.error.message}`;
     }
     return throwError(errorMessage);
   }

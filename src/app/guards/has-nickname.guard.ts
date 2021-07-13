@@ -19,7 +19,7 @@ export class HasNicknameGuard implements CanActivate {
 
       return this.userService.currentUser$.pipe(
         map(hasUsername => {
-          console.log(`hasUsername? ${hasUsername}`)
+          console.log(`hasUsername? ${hasUsername}`);
           if (hasUsername) {
             return true;
           } else {

@@ -12,7 +12,7 @@ import { MessageComponent } from '../message/message.component';
 import { Message } from '../../models/message';
 import { scan, startWith} from 'rxjs/operators';
 import { Observable} from 'rxjs';
-import {StatusService} from "../../services/status.service";
+import {StatusService} from '../../services/status.service';
 
 @Component({
   selector: 'app-messages-container',
@@ -27,7 +27,7 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
   currentPage = 1;
   firstElement: MessageComponent;
 
-  loadMoreAction: boolean = false;
+  loadMoreAction = false;
 
   constructor(
     private messageService: MessageService,
@@ -44,10 +44,10 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
     this.containerChildren.changes.pipe(
       startWith([]),
       scan((firstValue, value) => {
-          if(!this.loadMoreAction) {
+          if (!this.loadMoreAction) {
             if (!firstValue ) {
               this.scrollBottom('auto');
-            } else this.scrollBottom('smooth');
+            } else { this.scrollBottom('smooth'); }
             firstValue = value;
           } else {
             this.scrollBottom('auto', this.firstElement);
@@ -68,7 +68,7 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
 
   scrollBottom(behavior: ScrollBehavior = 'auto', scrollRef?: MessageComponent): void {
     this.elRef.nativeElement.style.scrollBehavior = behavior;
-    if(scrollRef) {
+    if (scrollRef) {
       this.elRef.nativeElement.scrollTop = scrollRef.elRef.nativeElement.offsetTop - 400;
     } else {
       this.elRef.nativeElement.scrollTop = this.elRef.nativeElement.scrollHeight;

@@ -17,7 +17,7 @@ import { ChatHeaderComponent } from './components/chat-header/chat-header.compon
 import { MessageComponent } from './components/message/message.component';
 import { MessageInputComponent } from './components/message-input/message-input.component';
 import { MessagesContainerComponent } from './components/messages-container/messages-container.component';
-import * as Sentry from "@sentry/angular";
+import * as Sentry from '@sentry/angular';
 import { Router } from '@angular/router';
 import { SentryErrorHandler } from './utils/sentry-error-handler';
 import { ErrorComponent } from './components/error/error.component';

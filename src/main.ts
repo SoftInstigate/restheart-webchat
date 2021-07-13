@@ -4,8 +4,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
-import * as Sentry from "@sentry/angular";
-import { Integrations } from "@sentry/tracing";
+import * as Sentry from '@sentry/angular';
+import { Integrations } from '@sentry/tracing';
 
 if (environment.production) {
   enableProdMode();
@@ -18,7 +18,7 @@ Sentry.init({
     new Integrations.BrowserTracing({
       // Avoid Http request track
       // Must handle sentry custom header in RH to avoid CORS error
-      traceXHR: false, 
+      traceXHR: false,
       tracingOrigins: environment.SENTRY_TRACING_ORIGINS,
       routingInstrumentation: Sentry.routingInstrumentation,
     }),
@@ -27,7 +27,7 @@ Sentry.init({
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production
-  //tracesSampleRate: 1.0,
+  // tracesSampleRate: 1.0,
 });
 
 enableProdMode();

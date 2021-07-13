@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {MessageService} from "../../services/message.service";
-import {FormControl, Validators} from "@angular/forms";
-import {isEmpty} from "../../validators/isEmpty.validator";
+import {MessageService} from '../../services/message.service';
+import {FormControl, Validators} from '@angular/forms';
+import {isEmpty} from '../../validators/isEmpty.validator';
 
 @Component({
   selector: 'app-message-input',

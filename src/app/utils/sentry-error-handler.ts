@@ -8,8 +8,8 @@ export class SentryErrorHandler implements ErrorHandler {
 
     handleError(error) {
         Sentry.captureException(error.originalError || error);
-        //Sentry.showReportDialog(error);
+        // Sentry.showReportDialog(error);
         this.router.navigateByUrl('/error');
-        console.error(error)
+        console.error(error);
     }
 }

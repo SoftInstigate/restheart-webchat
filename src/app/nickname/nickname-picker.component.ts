@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {UserService} from '../services/user.service';
-import {isEmpty} from "../validators/isEmpty.validator";
+import {isEmpty} from '../validators/isEmpty.validator';
 
 
 @Component({

@@ -5,7 +5,7 @@ import { MessageService } from '../services/message.service';
 import { map } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
-import {StatusService} from "../services/status.service";
+import {StatusService} from '../services/status.service';
 
 @Component({
   selector: 'app-home',

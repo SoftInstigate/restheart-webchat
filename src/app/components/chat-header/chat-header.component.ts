@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {StatusService} from "../../services/status.service";
-import {Subscription} from "rxjs";
+import {StatusService} from '../../services/status.service';
+import {Subscription} from 'rxjs';
 
 interface Status {
   isConnected: boolean;
-  message: 'Connected: Let\'s chat' | 'Trying to reconnect...'
+  message: 'Connected: Let\'s chat' | 'Trying to reconnect...';
 }
 
 @Component({
@@ -25,11 +25,11 @@ export class ChatHeaderComponent implements OnInit, OnDestroy {
           this.status = {isConnected: status, message: 'Connected: Let\'s chat'}
           : this.status = {isConnected: status, message: 'Trying to reconnect...'}
 
-    )
+    );
   }
 
   ngOnDestroy(): void {
-    this.statusSubscription.unsubscribe()
+    this.statusSubscription.unsubscribe();
   }
 
 }
