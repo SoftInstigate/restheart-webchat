@@ -20,5 +20,5 @@ However, the provided `docker-compose.yml` file containes all is needed.
 ```
 curl -u admin:secret -X PUT localhost:8080/messages -d '{"streams": [{"stages": [{"_$match": {"_$or": [{"operationType": "insert"}]}}],"uri": "all"}]}' -H "Content-Type: application/json"
 ```
-- Navigate into client folder `cd client/` and run `yarn` or `npm install` to install the required dependencies
-- Start angular application with `ng serve`
+- Run `yarn` or `npm install` to install the required dependencies
+- Start the angular application with `ng serve --configuration=local`
