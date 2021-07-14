@@ -1,12 +1,13 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, interval, Observable, Subject, Subscription, throwError, timer} from 'rxjs';
+import {BehaviorSubject, interval, Observable, Subject, Subscription, throwError} from 'rxjs';
 import { Message } from '../models/message';
 import { webSocket, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { UserService } from './user.service';
 import { environment } from '../../environments/environment';
-import {catchError, delay, delayWhen, filter, map, retryWhen, startWith, tap} from 'rxjs/operators';
+import {catchError, delay, map, retryWhen} from 'rxjs/operators';
 import {StatusService} from './status.service';
+import { HttpErrorHandlerService } from './http-error-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +59,11 @@ export class MessageService {
 
   private hasHistoryBeenLoaded = false;
 
-  constructor(private http: HttpClient, private userService: UserService, private statusService: StatusService) { }
+  constructor(
+    private http: HttpClient,
+    private userService: UserService,
+    private statusService: StatusService,
+    private errorHandler: HttpErrorHandlerService) { }
 
   getChatMessages(): Observable<Message[]> {
     return this.messages.asObservable();
@@ -82,7 +87,7 @@ export class MessageService {
         )
       ),
       map((data) => {
-        const { from, message, timestamp } = data.fullDocument;
+        const { from, message, timestamp } = data['fullDocument'];
         return { from, message, timestamp };
       }),
     ).subscribe(
@@ -101,25 +106,16 @@ export class MessageService {
     const toSend = { message, from: this.userService.getCurrentUser() };
 
     this.http.post(environment.MESSAGE_URL, toSend).pipe(
-      catchError(this.errorHandler)
+      catchError(this.errorHandler.handler)
     ).subscribe();
   }
 
 
   private getMessageHistory(page = 1, pageSize = 15): Observable<Message[]> {
     return this.http.get<Message[]>(`${environment.MESSAGE_URL}?page=${page}&pagesize=${pageSize}&sort={timestamp:-1}`)
-      .pipe(catchError(this.errorHandler));
+      .pipe(catchError(this.errorHandler.handler));
   }
 
 
-  private errorHandler = (error: HttpErrorResponse) =>  {
-    let errorMessage = '';
-    if (error.status === 0) {
-      errorMessage = `Network error. Status was: ${error.status}.`;
-    } else {
-      errorMessage = `Backend response status: ${error.status}. Backend body: ${error.error.message}`;
-    }
-    return throwError(errorMessage);
-  }
 
 }
