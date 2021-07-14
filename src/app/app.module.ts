@@ -22,7 +22,6 @@ import { Router } from '@angular/router';
 import { SentryErrorHandler } from './utils/sentry-error-handler';
 import { ErrorComponent } from './components/error/error.component';
 import { FromMillisToDatePipe } from './pipes/from-millis-to-date.pipe';
-import { MessageDateDividerPipe } from './pipes/message-date-divider.pipe';
 
 @NgModule({
   declarations: [
@@ -41,7 +40,6 @@ import { MessageDateDividerPipe } from './pipes/message-date-divider.pipe';
     MessagesContainerComponent,
     ErrorComponent,
     FromMillisToDatePipe,
-    MessageDateDividerPipe,
   ],
   imports: [
     BrowserModule,

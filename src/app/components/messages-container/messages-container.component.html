@@ -1,22 +1,9 @@
 <div class="message-container">
-  <button class="load-more-btn" *ngIf="(statusService.connectionStatus$ | async) && messageGroups" (click)="loadMore()">Load more</button>
+  <button class="load-more-btn" *ngIf="statusService.connectionStatus$ | async" (click)="loadMore()">Load more</button>
 
-  <div *ngIf="messageGroups.size">
+  <app-message #msg *ngFor="let message of (messages$ | async);" [message]="message"></app-message>
 
-      <div *ngFor="let key of messageGroups.keys()">
-        <app-message
-          *ngFor="let message of messageGroups.get(key)"
-          #msg
-          [message]="message"
-        ></app-message>
-        <div class="day-divider" *ngIf="key | messageDateDivider">
-          {{key | messageDateDivider}}
-        </div>
-      </div>
-    </div>
-
-
-
+<!--  <div id="day-divider">Today</div>-->
   <div #flag></div>
 
 </div>

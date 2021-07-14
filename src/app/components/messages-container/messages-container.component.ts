@@ -1,9 +1,17 @@
-import {AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {MessageService} from '../../services/message.service';
-import {MessageComponent} from '../message/message.component';
-import {Message} from '../../models/message';
-import {filter, groupBy, map, mergeMap, reduce, scan, startWith, switchMap, tap} from 'rxjs/operators';
-import {from, GroupedObservable} from 'rxjs';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
+import { MessageService } from '../../services/message.service';
+import { MessageComponent } from '../message/message.component';
+import { Message } from '../../models/message';
+import { scan, startWith} from 'rxjs/operators';
+import { Observable} from 'rxjs';
 import {StatusService} from '../../services/status.service';
 
 @Component({
@@ -15,8 +23,7 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
   @ViewChild('flag') private flag: ElementRef<HTMLDivElement>;
   @ViewChildren('msg') private containerChildren: QueryList<MessageComponent>;
 
-  // messageGroups$: Observable<[number, Message[]]>;
-  messageGroups: Map<string, Message[]> = new Map();
+  messages$: Observable<Message[]>;
   currentPage = 1;
   firstElement: MessageComponent;
 
@@ -30,31 +37,7 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    this.messageService.getChatMessages().pipe(
-      switchMap( (messages: Message[]) =>
-        from(messages).pipe(
-          groupBy(
-            message => {
-              let date;
-              try {
-                date = new Date(message.timestamp.$date);
-              } catch(e) {
-                return undefined;
-              }
-              return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
-            },
-            message => message
-            ),
-          mergeMap((group$) =>
-            group$.pipe(
-              reduce((acc, value) => [...acc, value], [`${group$.key}`]))
-          ),
-          map((arr) => ({ date: arr[0], messages: arr.slice(1) }))
-        )
-      )
-    ).subscribe(group => {
-      this.messageGroups.set(group.date as string, group.messages as Message[]);
-    })
+    this.messages$ = this.messageService.getChatMessages();
   }
 
   ngAfterViewInit(): void {
