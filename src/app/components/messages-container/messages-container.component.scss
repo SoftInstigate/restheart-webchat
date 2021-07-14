@@ -56,15 +56,32 @@
 
 }
 
-#day-divider {
+.day-divider {
   border: none;
-  width: 150px;
-  //background-color: var(--text-secondary);
+  //width: 150px;
   color: var(--text-secondary);
   cursor: pointer;
   border-radius: .7rem;
-  margin: 0 auto;
-  padding: .4em .7em;
+  margin: .4em auto;
+  width: 100%;
   text-align: center;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &::before{
+    display: inline-block;
+    content: '';
+    background-color: var(--text-primary);
+    width: 45%;
+    height: 1px;
+  }
+  &::after {
+    display: inline-block;
+    content: '';
+    background-color: var(--text-primary);
+    width: 45%;
+    height: 1px;
+  }
 }

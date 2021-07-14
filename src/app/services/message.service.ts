@@ -1,11 +1,11 @@
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, interval, Observable, Subject, Subscription, throwError} from 'rxjs';
+import {BehaviorSubject, from, interval, Observable, Subject, Subscription, throwError} from 'rxjs';
 import { Message } from '../models/message';
 import { webSocket, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { UserService } from './user.service';
 import { environment } from '../../environments/environment';
-import {catchError, delay, map, retryWhen} from 'rxjs/operators';
+import {catchError, delay, groupBy, map, mergeMap, retryWhen, switchMap, tap, toArray} from 'rxjs/operators';
 import {StatusService} from './status.service';
 import { HttpErrorHandlerService } from './http-error-handler.service';
 
