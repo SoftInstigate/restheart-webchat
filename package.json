@@ -19,13 +19,18 @@
     "url": "https://github.com/SoftInstigate/restheart-webchat"
   },
   "scripts": {
-    "ng": "ng",
+    "ng": "./node_modules/@angular/cli/bin/ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
+  ],
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.1.1",
