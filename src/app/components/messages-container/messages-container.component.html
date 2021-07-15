@@ -1,9 +1,12 @@
 <div class="message-container">
-  <button class="load-more-btn" *ngIf="statusService.connectionStatus$ | async" (click)="loadMore()">Load more</button>
+  <button class="load-more-btn" *ngIf="(statusService.connectionStatus$ | async) && hasMoreMessagesToLoad" (click)="loadMore()">Load more</button>
 
-  <app-message #msg *ngFor="let message of (messages$ | async);" [message]="message"></app-message>
-
-<!--  <div id="day-divider">Today</div>-->
+  <div *ngIf="(messages$ | async) as messagesGroups">
+    <div *ngFor="let group of messagesGroups">
+        <div id="day-divider"> <span> {{ group.date | date:'E, d LLLL' }} </span></div>
+        <app-message #msg *ngFor="let message of group.messages" [message]="message"></app-message>
+    </div>
+  </div>
   <div #flag></div>
 
 </div>
