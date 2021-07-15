@@ -58,13 +58,24 @@
 
 #day-divider {
   border: none;
-  width: 150px;
-  //background-color: var(--text-secondary);
-  color: var(--text-secondary);
-  cursor: pointer;
-  border-radius: .7rem;
-  margin: 0 auto;
-  padding: .4em .7em;
-  text-align: center;
-  position: relative;
+  width: 100%;
+  margin: .5rem auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  & > span {
+    min-width: max-content;
+    text-align: center;
+    padding: 0 .5em;
+    color: var(--text-secondary);
+  }
+
+  &::before, &::after {
+    content: '';
+    height: 1px;
+    background-color: var(--text-primary);
+    width: 100%;
+  }
 }
