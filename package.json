@@ -2,6 +2,7 @@
   "name": "change-streams-chat",
   "description": "This example application uses Restheart Websockets and ChangeStreams under the hood which provide an instant, zero lines of code API for a realtime chat application.",
   "version": "0.1.0",
+  "private": true,
   "homepage": "https://restheart.org/docs/try/#restheart-webchat",
   "bugs": {
     "url": "https://github.com/SoftInstigate/restheart-webchat/issues",
@@ -26,12 +27,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "browserslist": [
-    "defaults",
-    "not IE 11",
-    "maintained node versions"
-  ],
-  "private": true,
   "dependencies": {
     "@angular/animations": "~12.1.1",
     "@angular/common": "~12.1.1",
