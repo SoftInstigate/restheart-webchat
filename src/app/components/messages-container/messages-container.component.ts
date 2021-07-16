@@ -103,9 +103,9 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
     }
   }
 
-  @HostListener('scroll', ['$event'])
-  onScroll($event:Event):void {
-    console.log('scrolled', $event)
-  };
+  // @HostListener('scroll', ['$event'])
+  // onScroll($event:Event):void {
+  //   console.log('scrolled', $event)
+  // };
 
 }
