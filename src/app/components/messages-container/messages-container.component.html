@@ -1,5 +1,6 @@
 <div class="message-container">
-  <button class="load-more-btn" *ngIf="(statusService.connectionStatus$ | async) && hasMoreMessagesToLoad" (click)="loadMore()">Load more</button>
+
+  <button class="load-more-btn" *ngIf="statusService.connectionStatus$ | async" (click)="loadMore()">Load more</button>
 
   <div *ngIf="(messages$ | async) as messagesGroups">
     <div *ngFor="let group of messagesGroups">
@@ -7,6 +8,7 @@
         <app-message #msg *ngFor="let message of group.messages" [message]="message"></app-message>
     </div>
   </div>
-  <div #flag></div>
+
+  <div #bottomAnchor></div>
 
 </div>

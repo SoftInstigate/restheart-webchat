@@ -1,7 +1,7 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
+  ElementRef, HostListener,
   OnInit,
   QueryList,
   ViewChild,
@@ -10,8 +10,8 @@ import {
 import { MessageService } from '../../services/message.service';
 import { MessageComponent } from '../message/message.component';
 import { Message } from '../../models/message';
-import {filter, groupBy, map, mergeMap, scan, startWith, switchMap, tap, toArray} from 'rxjs/operators';
-import {from, GroupedObservable, iif, Observable} from 'rxjs';
+import { groupBy, map, mergeMap, scan, startWith, switchMap, toArray} from 'rxjs/operators';
+import {from, GroupedObservable, Observable} from 'rxjs';
 import {StatusService} from '../../services/status.service';
 
 interface MessageGroups {
@@ -25,7 +25,7 @@ interface MessageGroups {
   styleUrls: ['./messages-container.component.scss']
 })
 export class MessagesContainerComponent implements OnInit, AfterViewInit {
-  @ViewChild('flag') private flag: ElementRef<HTMLDivElement>;
+  @ViewChild('bottomAnchor') private bottomAnchor: ElementRef<HTMLDivElement>;
   @ViewChildren('msg') private containerChildren: QueryList<MessageComponent>;
 
   messages$: Observable<MessageGroups[]>;
@@ -33,8 +33,10 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
   firstElement: MessageComponent;
 
   loadMoreAction = false;
-  hasMoreMessagesToLoad = true;
-  messageCount = 0;
+
+  observer = new IntersectionObserver(() => {
+    console.log('into view');
+  }, { root: this.elRef.nativeElement})
 
   constructor(
     private messageService: MessageService,
@@ -72,10 +74,9 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
       startWith([]),
       scan((firstValue, value) => {
           if (!this.loadMoreAction) {
-            if (!firstValue ) {
-              this.scrollBottom('auto');
-            } else { this.scrollBottom('smooth'); }
+            !firstValue ? this.scrollBottom('auto') : this.scrollBottom('smooth');
             firstValue = value;
+
           } else {
             this.scrollBottom('auto', this.firstElement);
             this.loadMoreAction = !this.loadMoreAction;
@@ -89,7 +90,7 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
 
   loadMore() {
     this.firstElement = this.containerChildren.first;
-    this.loadMoreAction = true;
+    this.loadMoreAction = true; // prevent bottom scrolling
     this.messageService.getOlderMessages(++this.currentPage);
   }
 
@@ -101,4 +102,10 @@ export class MessagesContainerComponent implements OnInit, AfterViewInit {
       this.elRef.nativeElement.scrollTop = this.elRef.nativeElement.scrollHeight;
     }
   }
+
+  @HostListener('scroll', ['$event'])
+  onScroll($event:Event):void {
+    console.log('scrolled', $event)
+  };
+
 }
