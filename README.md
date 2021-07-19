@@ -22,8 +22,8 @@ You need node 12.x and npm 6.x to build and run this project.
 - Create message collection and define change stream stage
 
 ```json
-curl -u admin:secret -X PUT localhost:8080/messages -d '
- "streams": [
+curl -u admin:secret -X PUT localhost:8080/messages -H "Content-Type: application/json" -d '{
+    "streams": [
         {
             "stages": [
                 {
@@ -39,7 +39,7 @@ curl -u admin:secret -X PUT localhost:8080/messages -d '
             "uri": "all"
         }
     ]
-' -H "Content-Type: application/json"
+}'
 ```
 - Run `yarn` to install the required dependencies
 - Start the angular application with `yarn start --configuration=local`
