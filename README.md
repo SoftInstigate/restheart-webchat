@@ -1,8 +1,8 @@
 # RESTHeart Webchat
 
-This examples uses [RESTHeart](https://restheart.org) WebsSockets API to create a basic chat application.
+This example uses [Angular](https://angular.io) and [RESTHeart](https://restheart.org) WebsSocket API to create a basic chat application.
 
-For more information refer to the [Change Streams section](https://restheart.org/docs/change-streams/) in the RESTheart official documentation.
+For more information refer to the [Change Streams section](https://restheart.org/docs/change-streams/) in the RESTHeart documentation.
 
 ## Requirements
 
@@ -10,7 +10,7 @@ For more information refer to the [Change Streams section](https://restheart.org
 - RESTHeart (6+)
 - MongoDB (3.6+)
 
-However, the provided `docker-compose.yml` file containes all that is needed.
+If you have docker installed, the provided `docker-compose.yml` file containes all that is needed.
 
 ## Quick start
 
