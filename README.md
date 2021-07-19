@@ -20,8 +20,26 @@ You need node 12.x and npm 6.x to build and run this project.
 - Clone this repository `git clone git@github.com:SoftInstigate/restheart-webchat.git`
 - Run the following command to download and run the latest RESTHeart version `./bin/restart.sh -p restheart`
 - Create message collection and define change stream stage
-```
-curl -u admin:secret -X PUT localhost:8080/messages -d '{"streams": [{"stages": [{"_$match": {"_$or": [{"operationType": "insert"}]}}],"uri": "all"}]}' -H "Content-Type: application/json"
+
+```json
+curl -u admin:secret -X PUT localhost:8080/messages -d '
+ "streams": [
+        {
+            "stages": [
+                {
+                    "_$match": {
+                        "_$or": [
+                            {
+                                "operationType": "insert"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "uri": "all"
+        }
+    ]
+' -H "Content-Type: application/json"
 ```
 - Run `yarn` to install the required dependencies
 - Start the angular application with `yarn start --configuration=local`
