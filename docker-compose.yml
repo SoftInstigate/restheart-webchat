@@ -15,7 +15,7 @@ volumes:
 
 services:
     mongodb:
-        image: mongo:4.2
+        image: mongo:5
         container_name: restheart-mongo
         command: ["--bind_ip", "restheart-mongo", "--replSet", "rs0"]
         environment:
@@ -30,7 +30,7 @@ services:
 
 ### Initiate MongoDB as a single node replica set
     mongodb-initiate:
-      image: mongo:4.2
+      image: mongo:5
       networks:
          - restheart-backend
       depends_on:
