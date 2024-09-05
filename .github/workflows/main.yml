@@ -10,11 +10,11 @@ on:
 jobs:
   build:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 12.x
           cache: "npm"
@@ -36,10 +36,10 @@ jobs:
           SOURCE_DIR: "dist/change-streams-chat"
 
       - name: Invalidate Cloudfront
-        uses: chetan/invalidate-cloudfront-action@v1.3
+        uses: chetan/invalidate-cloudfront-action@v2
         env:
           DISTRIBUTION: ${{ secrets.DISTRIBUTION }}
           PATHS: "/*"
-          AWS_REGION: "us-south-1"
+          AWS_REGION: "eu-central-1"
           AWS_ACCESS_KEY_ID: ${{ secrets.SI_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SI_AWS_SECRET_ACCESS_KEY }}
